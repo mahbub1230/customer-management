@@ -1,8 +1,9 @@
-import { createApp } from 'vue/dist/vue.esm-bundler.js'
-import HelloWorld from './components/HelloWorld.vue'
-import ExampleComponent from './components/ExampleComponent.vue'
+import { createApp } from 'vue/dist/vue.esm-bundler.js';
+import AppLayout from './components/AppLayout.vue';
+import router from './router';
 
-const app = createApp({})
-app.component('hello-world', HelloWorld)
-app.component('example-component', ExampleComponent);
-app.mount('#app')
+const app = createApp({});
+app.component('app-layout', AppLayout);
+app.use(router);
+app.mount('#app');
+
