@@ -1,3 +1,4 @@
+
 # Customer Management - Laravel 11 + Vue 3 + Docker
 
 This is a Laravel 11 project integrated with Vue 3 and Docker. It uses PHP 8.2, Apache, MySQL 8.0, and Vite for asset bundling.
@@ -13,8 +14,6 @@ This is a Laravel 11 project integrated with Vue 3 and Docker. It uses PHP 8.2, 
 ---
 
 ## 🚀 First-Time Setup (Local + Docker)
-
-Follow these steps after cloning the repo or when setting up the project for the first time:
 
 ### 1. Clone the repository
 
@@ -65,9 +64,13 @@ DB_PASSWORD=root
 
 ### 7. Update APP_URL in `.env`
 
+```
 APP_URL=https://demo.slipstram.com
+```
 
-## 🌐 Access via Custom Domain: https://demo.slipstram.com
+---
+
+## 🌐 Access via Custom Domain
 
 To run this project under `https://demo.slipstram.com` locally using Docker with HTTPS:
 
@@ -97,14 +100,13 @@ docker-compose up --build -d
 
 > The entrypoint script will create the certificate and key in `/etc/apache2/ssl/` if they do not already exist.
 
-
 ### 8. Run migrations
 
 ```bash
 php artisan migrate
 ```
 
-### 8. Optional: Fix permissions
+### 9. Optional: Fix permissions
 
 ```bash
 chown -R www-data:www-data /var/www/html
@@ -114,9 +116,44 @@ chown -R www-data:www-data storage bootstrap/cache
 
 ---
 
+## 📄 Swagger API Documentation
+
+### 🔄 Generate Docs
+
+Inside the container, run:
+
+```bash
+php artisan l5-swagger:generate
+```
+
+✅ Make sure your routes are visible via:
+
+```bash
+php artisan route:list --path=api
+```
+
+### 🌐 View Swagger UI
+
+Visit:
+
+```
+https://demo.slipstram.com/api/documentation
+```
+
+If you're accessing locally, ensure `L5_SWAGGER_HOST` and `L5_SWAGGER_BASE_PATH` are set in your `.env`:
+
+```env
+L5_SWAGGER_BASE_PATH=/api
+L5_SWAGGER_HOST=demo.slipstram.com
+```
+
+And set them in `config/l5-swagger.php` if needed.
+
+---
+
 ## 🌐 Access the Application
 
-### 9. Open the app in your browser
+Open the app in your browser:
 
 ```
 https://demo.slipstram.com
@@ -126,18 +163,7 @@ https://demo.slipstram.com
 
 ---
 
-## 📄 SSL Notes
-
-- SSL certs are generated inside the container at runtime.
-- You can customize the cert generation by editing `docker/scripts/generate-ssl.sh`.
-- Apache reads the cert from `/etc/apache2/ssl/ssl.crt` and `/ssl.key`.
-
-
----
-
 ## 🔁 Subsequent Usage
-
-When restarting or continuing development:
 
 ### Start the containers
 
@@ -151,7 +177,7 @@ docker-compose up -d
 docker-compose down
 ```
 
-### Re-enter the container if needed
+### Re-enter the container
 
 ```bash
 docker exec -it laravel_app bash
@@ -161,7 +187,7 @@ docker exec -it laravel_app bash
 
 ## ⚙️ Laravel/Vue Scripts
 
-Run these inside the container or locally if dependencies are installed:
+Run these inside the container:
 
 ```bash
 # Laravel
@@ -172,6 +198,19 @@ php artisan serve
 npm run dev
 npm run build
 ```
+
+---
+
+## ⚙️ Run unit test
+
+Run these inside the container:
+
+```bash
+# Laravel
+php artisan test
+```
+
+---
 
 ## 📂 Project Structure
 
@@ -185,6 +224,3 @@ customer-management/
 ├── .env                    # Laravel env config
 ├── README.md               # This file
 ```
-
-
-

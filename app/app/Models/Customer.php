@@ -3,11 +3,23 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Customer extends Model
 {
-    public function customer()
+     use HasFactory;
+
+    protected $fillable = [
+        'name',
+        'reference',
+        'category',
+        'start_date',
+        'description',
+    ];
+
+    public function contacts(): HasMany
     {
-        return $this->belongsTo(Customer::class);
+        return $this->hasMany(Contact::class);
     }
 }
