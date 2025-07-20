@@ -58,7 +58,7 @@ Use the following DB values in `.env`:
 DB_CONNECTION=mysql
 DB_HOST=db
 DB_PORT=3306
-DB_DATABASE=laravel
+DB_DATABASE=customer_management
 DB_USERNAME=root
 DB_PASSWORD=root
 ```
@@ -71,7 +71,7 @@ APP_URL=https://demo.slipstram.com
 
 To run this project under `https://demo.slipstram.com` locally using Docker with HTTPS:
 
-### 1. Edit your hosts file
+### 7.1. Edit your hosts file
 
 Add the following line to your system's `hosts` file:
 
@@ -82,13 +82,13 @@ Add the following line to your system's `hosts` file:
 - **Windows**: `C:\Windows\System32\drivers\etc\hosts`
 - **Mac/Linux**: `/etc/hosts`
 
-### 2. Use the preconfigured Docker setup
+### 7.2. Use the preconfigured Docker setup
 
 This project includes a Dockerfile and startup script that will automatically generate a self-signed SSL certificate on container startup.
 
 No manual cert generation is required.
 
-### 3. Build and run the containers
+### 7.3. Build and run the containers
 
 ```bash
 docker-compose down
@@ -97,23 +97,8 @@ docker-compose up --build -d
 
 > The entrypoint script will create the certificate and key in `/etc/apache2/ssl/` if they do not already exist.
 
-### 4. Open the app in your browser
 
-```
-https://demo.slipstram.com
-```
-
-> ⚠️ The browser may warn about the self-signed certificate. Accept it to proceed.
-
----
-
-## 📄 SSL Notes
-
-- SSL certs are generated inside the container at runtime.
-- You can customize the cert generation by editing `docker/scripts/generate-ssl.sh`.
-- Apache reads the cert from `/etc/apache2/ssl/ssl.crt` and `/ssl.key`.
-
-### 7. Run migrations
+### 8. Run migrations
 
 ```bash
 php artisan migrate
@@ -131,13 +116,22 @@ chown -R www-data:www-data storage bootstrap/cache
 
 ## 🌐 Access the Application
 
-Open in browser:
+### 9. Open the app in your browser
 
 ```
 https://demo.slipstram.com
 ```
 
-You should see the Laravel welcome page or your Vue component output.
+> ⚠️ The browser may warn about the self-signed certificate. Accept it to proceed.
+
+---
+
+## 📄 SSL Notes
+
+- SSL certs are generated inside the container at runtime.
+- You can customize the cert generation by editing `docker/scripts/generate-ssl.sh`.
+- Apache reads the cert from `/etc/apache2/ssl/ssl.crt` and `/ssl.key`.
+
 
 ---
 
