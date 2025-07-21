@@ -33,7 +33,7 @@
     </div>
 
     <table class="w-full text-sm border border-collapse text-center">
-      <thead class="bg-gray-200">
+      <thead class="bg-gray-300">
         <tr>
           <th class="border px-4 py-2 align-middle">Name</th>
           <th class="border px-4 py-2 align-middle">Reference</th>
@@ -43,7 +43,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="customer in customers" :key="customer.id" class="even:bg-gray-50 text-center">
+        <tr v-for="(customer, index) in customers" :key="customer.id" :class="index % 2 === 0 ? 'bg-white' : 'bg-gray-100'">
           <td class="border px-4 py-2 align-middle">{{ customer.name }}</td>
           <td class="border px-4 py-2 align-middle">{{ customer.reference }}</td>
           <td class="border px-4 py-2 align-middle">{{ customer.category }}</td>

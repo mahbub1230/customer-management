@@ -60,14 +60,14 @@
         </div>
         <table class="w-full border-collapse">
           <thead>
-            <tr class="bg-gray-100">
+            <tr class="bg-gray-300">
               <th class="border px-2 py-1 text-left">First Name</th>
               <th class="border px-2 py-1 text-left">Last Name</th>
               <th class="border px-2 py-1 text-left">Action</th>
             </tr>
           </thead>
           <tbody>
-            <tr v-for="contact in contacts" :key="contact.id">
+            <tr v-for="(contact, index) in contacts" :key="contact.id" :class="index % 2 === 0 ? 'bg-white' : 'bg-gray-100'">
               <td class="border px-2 py-1">{{ contact.first_name }}</td>
               <td class="border px-2 py-1">{{ contact.last_name }}</td>
               <td class="border px-2 py-1">
