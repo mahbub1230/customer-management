@@ -296,6 +296,34 @@
                         "description": "Customer updated successfully"
                     }
                 }
+            },
+            "delete": {
+                "tags": [
+                    "Customers"
+                ],
+                "summary": "Delete a customer and its associated contacts",
+                "description": "Deletes the specified customer. Also deletes all related contacts if cascading is enabled.",
+                "operationId": "destroyCustomer",
+                "parameters": [
+                    {
+                        "name": "customer",
+                        "in": "path",
+                        "description": "ID of the customer to delete",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Customer deleted successfully"
+                    },
+                    "404": {
+                        "description": "Customer not found"
+                    }
+                }
             }
         }
     },

@@ -124,4 +124,35 @@ class CustomerController extends Controller
         $customer->update($validated);
         return $customer;
     }
+
+    /**
+     * @OA\Delete(
+     *     path="/api/customers/{customer}",
+     *     summary="Delete a customer and its associated contacts",
+     *     description="Deletes the specified customer. Also deletes all related contacts if cascading is enabled.",
+     *     operationId="destroyCustomer",
+     *     tags={"Customers"},
+     *     @OA\Parameter(
+     *         name="customer",
+     *         in="path",
+     *         required=true,
+     *         description="ID of the customer to delete",
+     *         @OA\Schema(type="integer", example=1)
+     *     ),
+     *     @OA\Response(
+     *         response=204,
+     *         description="Customer deleted successfully"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Customer not found"
+     *     )
+     * )
+     */
+
+    public function destroy(Customer $customer)
+    {
+        $customer->delete(); 
+        return response()->noContent();
+    }
 }
