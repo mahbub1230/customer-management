@@ -325,6 +325,34 @@
                     }
                 }
             }
+        },
+        "/api/customers/{id}": {
+            "get": {
+                "tags": [
+                    "Customers"
+                ],
+                "summary": "Get customer details by ID",
+                "operationId": "d51ce35bfe185b82c242dd4443ffba54",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the customer",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Customer detail with contacts"
+                    },
+                    "404": {
+                        "description": "Customer not found"
+                    }
+                }
+            }
         }
     },
     "tags": [

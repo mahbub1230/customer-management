@@ -46,11 +46,20 @@ class CustomerApiTest extends TestCase
             'category' => 'Gold'
         ];
 
-
         $response = $this->putJson("/api/customers/{$customer->id}", $data);
 
         $response->assertStatus(200)->assertJsonFragment($data);
         $this->assertDatabaseHas('customers', $data);
+    }
+
+    public function test_can_delete_customer()
+    {
+        $customer = Customer::factory()->create();
+
+        $response = $this->deleteJson("/api/customers/{$customer->id}");
+
+        $response->assertStatus(204);
+        $this->assertDatabaseMissing('customers', ['id' => $customer->id]);
     }
 
     public function test_can_list_contacts_for_customer()
@@ -91,5 +100,15 @@ class CustomerApiTest extends TestCase
 
         $response->assertStatus(200)->assertJsonFragment($data);
         $this->assertDatabaseHas('contacts', $data);
+    }
+
+    public function test_can_delete_contact()
+    {
+        $contact = Contact::factory()->create();
+
+        $response = $this->deleteJson("/api/contacts/{$contact->id}");
+
+        $response->assertStatus(204);
+        $this->assertDatabaseMissing('contacts', ['id' => $contact->id]);
     }
 }

@@ -8,6 +8,7 @@ Route::prefix('customers')->group(function () {
     Route::get('/', [CustomerController::class, 'index']);
     Route::post('/', [CustomerController::class, 'store']);
     Route::put('{customer}', [CustomerController::class, 'update']);
+    Route::get('/{id}', [CustomerController::class, 'show']);
 
     Route::get('{customer}/contacts', [ContactController::class, 'index']);
     Route::post('{customer}/contacts', [ContactController::class, 'store']);
@@ -15,3 +16,4 @@ Route::prefix('customers')->group(function () {
 });
 
 Route::put('contacts/{contact}', [ContactController::class, 'update']);
+Route::delete('contacts/{contact}', [ContactController::class, 'destroy']);

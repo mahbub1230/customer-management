@@ -1,59 +1,55 @@
 <template>
   <div>
-    <div class="flex justify-between items-center mb-4">
-      <h2 class="text-2xl font-bold text-blue-700">Customers</h2>
-      <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
-        Create
-      </button>
+    <div class="flex justify-between items-center mb-2">
+      <h2 class="text-lg font-bold text-blue-700">Customers</h2>
+      <button @click="createCustomer" class="bg-blue-600 text-white px-4 py-1 rounded">Create</button>
     </div>
 
-    <div class="bg-gray-50 p-4 rounded border mb-4">
-      <div class="flex gap-4 items-center">
+    <div class="border rounded p-3 mb-4">
+      <div class="grid grid-cols-[auto_auto_auto_1fr] gap-x-4 items-end">
         <div>
-          <label class="block text-sm font-medium">Search</label>
+          <label class="block text-sm font-semibold">Search</label>
           <input
             type="text"
             v-model="search"
-            class="border rounded px-2 py-1"
-            placeholder="Search by name or reference"
+            class="border rounded px-2 py-1 w-40"
+            placeholder="Search"
           />
         </div>
         <div>
-          <label class="block text-sm font-medium">Category</label>
-          <select v-model="category" class="border rounded px-2 py-1">
-            <option value="">Select...</option>
+          <label class="block text-sm font-semibold">Category</label>
+          <select v-model="category" class="border rounded px-2 py-1 w-40">
+            <option value="">[...Select...]</option>
             <option value="Gold">Gold</option>
             <option value="Silver">Silver</option>
             <option value="Bronze">Bronze</option>
           </select>
         </div>
-        <button @click="applyFilter" class="bg-blue-600 text-white px-3 py-1 rounded">
-          Apply
-        </button>
-        <button @click="resetFilter" class="bg-gray-300 px-3 py-1 rounded">
-          Clear
-        </button>
+        <div class="flex gap-2">
+          <button @click="resetFilter" class="bg-gray-300 text-black px-4 py-1 rounded">Clear</button>
+          <button @click="applyFilter" class="bg-blue-600 text-white px-4 py-1 rounded">Apply</button>
+        </div>
       </div>
     </div>
 
-    <table class="min-w-full bg-white border rounded text-sm">
-      <thead class="bg-gray-200 text-left">
+    <table class="w-full text-sm border border-collapse text-center">
+      <thead class="bg-gray-200">
         <tr>
-          <th class="px-4 py-2 border">Name</th>
-          <th class="px-4 py-2 border">Reference</th>
-          <th class="px-4 py-2 border">Category</th>
-          <th class="px-4 py-2 border">No of Contacts</th>
-          <th class="px-4 py-2 border">Edit | Delete</th>
+          <th class="border px-4 py-2 align-middle">Name</th>
+          <th class="border px-4 py-2 align-middle">Reference</th>
+          <th class="border px-4 py-2 align-middle">Category</th>
+          <th class="border px-4 py-2 align-middle">No of Contacts</th>
+          <th class="border px-4 py-2 align-middle">Edit | Delete</th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="customer in customers" :key="customer.id" class="odd:bg-gray-50">
-          <td class="px-4 py-2 border">{{ customer.name }}</td>
-          <td class="px-4 py-2 border">{{ customer.reference }}</td>
-          <td class="px-4 py-2 border">{{ customer.category }}</td>
-          <td class="px-4 py-2 border">{{ customer.contacts_count }}</td>
-          <td class="px-4 py-2 border">
-            <a href="#" class="text-blue-600 hover:underline">Edit</a> |
+        <tr v-for="customer in customers" :key="customer.id" class="even:bg-gray-50 text-center">
+          <td class="border px-4 py-2 align-middle">{{ customer.name }}</td>
+          <td class="border px-4 py-2 align-middle">{{ customer.reference }}</td>
+          <td class="border px-4 py-2 align-middle">{{ customer.category }}</td>
+          <td class="border px-4 py-2 align-middle">{{ customer.contacts_count }}</td>
+          <td class="border px-4 py-2 align-middle">
+            <a href="#" @click.prevent="editCustomer(customer.id)" class="text-blue-600 hover:underline">Edit</a> |
             <a href="#" @click.prevent="confirmDelete(customer)" class="text-red-600 hover:underline">Delete</a>
           </td>
         </tr>
@@ -79,14 +75,24 @@
         </div>
       </div>
     </div>
+
+    <CustomerFormPanel
+      v-if="showCustomerForm"
+      :customer-id="selectedCustomerId"
+      @close="closeCustomerForm"
+    />
   </div>
 </template>
 
 <script>
 import axios from 'axios';
+import CustomerFormPanel from './CustomerFormPanel.vue';
 
 export default {
   name: 'CustomerPanel',
+  components: {
+    CustomerFormPanel
+  },
   data() {
     return {
       customers: [],
@@ -94,6 +100,8 @@ export default {
       category: '',
       showDeleteConfirm: false,
       customerToDelete: null,
+      showCustomerForm: false,
+      selectedCustomerId: null
     };
   },
   methods: {
@@ -101,8 +109,8 @@ export default {
       axios
         .get('/api/customers', {
           params: {
-            search: this.search,
-            category: this.category,
+            search: this.search.trim(),
+            category: this.category.trim(),
           },
         })
         .then((response) => {
@@ -140,6 +148,18 @@ export default {
           console.error('Failed to delete customer:', error);
         });
     },
+    createCustomer() {
+      this.selectedCustomerId = null;
+      this.showCustomerForm = true;
+    },
+    editCustomer(customerId) {
+      this.selectedCustomerId = customerId;
+      this.showCustomerForm = true;
+    },
+    closeCustomerForm() {
+      this.showCustomerForm = false;
+      this.fetchCustomers();
+    }
   },
   mounted() {
     this.fetchCustomers();

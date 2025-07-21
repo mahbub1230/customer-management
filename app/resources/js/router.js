@@ -1,13 +1,12 @@
-// resources/js/router.js
 import { createRouter, createWebHistory } from 'vue-router';
-import CustomerPanel from './components/CustomerPanel.vue';
+import CustomerPanel from './components/customers/CustomerPanel.vue';
 
 const routes = [
     {
         path: '/customers',
         name: 'customers',
         component: CustomerPanel
-    }
+    },
 ];
 
 const router = createRouter({
@@ -16,3 +15,4 @@ const router = createRouter({
 });
 
 export default router;
+

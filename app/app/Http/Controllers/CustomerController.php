@@ -155,4 +155,41 @@ class CustomerController extends Controller
         $customer->delete(); 
         return response()->noContent();
     }
+
+    /**
+     * @OA\Get(
+     *     path="/api/customers/{id}",
+     *     summary="Get customer details by ID",
+     *     tags={"Customers"},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         description="ID of the customer",
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Customer detail with contacts"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Customer not found"
+     *     )
+     * )
+     */
+    public function show($id)
+    {
+        $customer = Customer::with('contacts')->findOrFail($id);
+        return response()->json([
+            'id' => $customer->id,
+            'name' => $customer->name,
+            'reference' => $customer->reference,
+            'category' => $customer->category,
+            'start_date' => $customer->start_date,
+            'description' => $customer->description,
+            'contacts' => $customer->contacts
+        ]);
+    }
+
 }
