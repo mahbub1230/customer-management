@@ -212,6 +212,17 @@ php artisan test
 
 ---
 
+## ⚙️ Run e2e test
+
+Run these inside the container:
+
+```bash
+# Laravel
+npx playwright test
+```
+
+---
+
 ## 📂 Project Structure
 
 ```

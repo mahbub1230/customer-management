@@ -2,14 +2,15 @@
   <div>
     <div class="flex justify-between items-center mb-2">
       <h2 class="text-lg font-bold text-blue-700">Customers</h2>
-      <button @click="createCustomer" class="bg-blue-600 text-white px-4 py-1 rounded">Create</button>
+      <button @click="createCustomer" data-testid="customer-create-button" class="bg-blue-600 text-white px-4 py-1 rounded">Create</button>
     </div>
 
     <div class="border rounded p-3 mb-4">
       <div class="grid grid-cols-[auto_auto_auto_1fr] gap-x-4 items-end">
         <div>
-          <label class="block text-sm font-semibold">Search</label>
+          <label for="search" class="block text-sm font-semibold">Search</label>
           <input
+            id="search"
             type="text"
             v-model="search"
             class="border rounded px-2 py-1 w-40"

@@ -11,7 +11,7 @@
         </div>
       </div>
 
-      <div v-if="confirmationMessage" class="mb-4 p-3 bg-green-100 text-green-800 border border-green-300 rounded">
+      <div v-if="confirmationMessage" class="mb-4 p-3 bg-green-100 text-green-800 border border-green-300 rounded"  data-testid="customer-success-message">
         {{ confirmationMessage }}
       </div>
       <div v-if="errorMessage" class="mb-4 p-3 bg-red-100 text-red-800 border border-red-300 rounded">
@@ -22,16 +22,16 @@
         <div class="border p-4">
           <h3 class="font-semibold mb-2 text-blue-600">General</h3>
           <div class="mb-2">
-            <label class="block mb-1">Name<span class="text-red-500">*</span></label>
-            <input v-model="customer.name" type="text" class="border w-full px-2 py-1 rounded" required />
+            <label for="customer-name" class="block mb-1">Name<span class="text-red-500">*</span></label>
+            <input id="customer-name" v-model="customer.name" type="text" class="border w-full px-2 py-1 rounded" required />
           </div>
           <div class="mb-2">
-            <label class="block mb-1">Reference<span class="text-red-500">*</span></label>
-            <input v-model="customer.reference" type="text" class="border w-full px-2 py-1 rounded" required />
+            <label for="customer-reference" class="block mb-1">Reference<span class="text-red-500">*</span></label>
+            <input id="customer-reference" v-model="customer.reference" type="text" class="border w-full px-2 py-1 rounded" required />
           </div>
           <div class="mb-2">
-            <label class="block mb-1">Category<span class="text-red-500">*</span></label>
-            <select v-model="customer.category" class="border w-full px-2 py-1 rounded" required>
+            <label for="customer-category" class="block mb-1">Category<span class="text-red-500">*</span></label>
+            <select id="customer-category" v-model="customer.category" class="border w-full px-2 py-1 rounded" required>
               <option value="">-- Select --</option>
               <option value="Gold">Gold</option>
               <option value="Silver">Silver</option>
@@ -56,7 +56,7 @@
       <div class="border p-4">
         <div class="flex justify-between items-center mb-2">
           <h3 class="font-semibold text-blue-600">Contacts</h3>
-          <button class="bg-blue-600 text-white px-3 py-1 rounded" :disabled="!enableContactButton" @click="openContactForm(null)">Create</button>
+          <button data-testid="contact-create-button" class="bg-blue-600 text-white px-3 py-1 rounded" :disabled="!enableContactButton" @click="openContactForm(null)">Create</button>
         </div>
         <table class="w-full border-collapse">
           <thead>
@@ -71,8 +71,8 @@
               <td class="border px-2 py-1">{{ contact.first_name }}</td>
               <td class="border px-2 py-1">{{ contact.last_name }}</td>
               <td class="border px-2 py-1">
-                <a href="#" @click.prevent="openContactForm(contact)">Edit</a> |
-                <a href="#" @click.prevent="confirmDeleteContact(contact)">Delete</a>
+                <a href="#"  data-testid="contact-edit-button" @click.prevent="openContactForm(contact)">Edit</a> |
+                <a href="#"  data-testid="contact-delete-button" @click.prevent="confirmDeleteContact(contact)">Delete</a>
               </td>
             </tr>
           </tbody>
@@ -80,8 +80,8 @@
       </div>
 
       <!-- Contact Form Modal -->
-      <div v-if="showContactModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-          <div class="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-center z-50">
+      <div data-testid="contact-modal" v-if="showContactModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+          <div  data-testid="modal-backdrop" class="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-center z-50">
         <div class="bg-white w-full max-w-md rounded-lg shadow-lg p-6 relative">
           <div class="flex justify-between items-center mb-4">
               <h2 class="text-xl font-bold text-blue-600">
@@ -89,7 +89,7 @@
               </h2>
               <div class="flex items-center space-x-2">
                 <button @click="closeContactForm" class="text-gray-600 hover:text-gray-800">Back</button>
-                <button @click="saveContact" class="bg-blue-600 text-white px-4 py-1 rounded-full">Save</button>
+                <button data-testid="contact-save-button" @click="saveContact" class="bg-blue-600 text-white px-4 py-1 rounded-full">Save</button>
               </div>
             </div>
 
@@ -99,12 +99,12 @@
                 {{ contactErrorMessage }}
               </div>
               <div class="mb-2">
-                <label class="block mb-1">First Name<span class="text-red-500">*</span></label>
-                <input v-model="selectedContact.first_name" type="text" class="border w-full px-2 py-1 rounded" />
+                <label for="contact-first-name" class="block mb-1">First Name<span class="text-red-500">*</span></label>
+                <input id="contact-first-name" v-model="selectedContact.first_name" type="text" class="border w-full px-2 py-1 rounded" />
               </div>
               <div class="mb-2">
-                <label class="block mb-1">Last Name</label>
-                <input v-model="selectedContact.last_name" type="text" class="border w-full px-2 py-1 rounded" />
+                <label for="contact-last-name" class="block mb-1">Last Name</label>
+                <input id="contact-last-name" v-model="selectedContact.last_name" type="text" class="border w-full px-2 py-1 rounded" />
               </div>
             </div>
           </div>
